@@ -1,9 +1,28 @@
-import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
-
-const list = [1, 2, 3, 4, 5, 6];
+import {
+  Draggable,
+  Droppable,
+  DragDropContext,
+  DropResult,
+} from "react-beautiful-dnd";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { todoState } from "./atoms";
 
 function App() {
-  const onDragEnd = () => {};
+  const [list, setList] = useRecoilState(todoState);
+  const onDragEnd = ({ destination, source }: DropResult) => {
+    const destinationIndex = destination?.index;
+    if (!destination || destinationIndex == null) return;
+
+    setList((pre) => {
+      console.log("before", pre);
+      const newArray = [...pre];
+      newArray.splice(source.index, 1);
+      console.log("delete", newArray);
+      newArray.splice(destination.index, 0, pre[source.index]);
+      console.log("insert", newArray);
+      return newArray;
+    });
+  };
   return (
     <div className="p-10 bg-blue-500 w-screen h-screen">
       <DragDropContext onDragEnd={onDragEnd}>
@@ -16,7 +35,7 @@ function App() {
             >
               <h1 className=" mb-4 text-4xl font-bold">Fint</h1>
               {list.map((i, x) => (
-                <Draggable key={x} index={x} draggableId={`drop${x}`}>
+                <Draggable key={x} index={x} draggableId={x.toString()}>
                   {(provider) => (
                     <li
                       ref={provider.innerRef}
