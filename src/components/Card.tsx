@@ -25,7 +25,6 @@ const Card: FC<CardProps> = ({ list, index, status }) => {
   return (
     <Draggable index={index} draggableId={list.id}>
       {(provider, snapshot) => {
-        console.log(snapshot);
         return (
           <li
             ref={provider.innerRef}
