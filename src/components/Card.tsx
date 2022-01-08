@@ -12,29 +12,33 @@ type CardProps = {
 const Card: FC<CardProps> = ({ list, index }) => {
   return (
     <Draggable index={index} draggableId={list.id}>
-      {(provider) => (
-        <li
-          ref={provider.innerRef}
-          {...provider.dragHandleProps}
-          {...provider.draggableProps}
-          className="flex cursor-pointer bg-red-200 w-full rounded-xl shadow-md mb-4"
-        >
-          <img
-            className="m-5 mr-8 w-10 h-10 rounded-full shadow-md"
-            src="https://images.unsplash.com/photo-1641499414064-306123010a9b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
-            alt="img"
-          />
-          <div className="p-3 w-full flex justify-between flex-col">
-            <h2>{list.todo}</h2>
-            <div className="w-full flex items-center mt-3 pr-3 justify-between">
-              <button className=" text-sm cursor-pointer rounded-md bg-blue-300 p-1">
-                Fin
-              </button>
-              <small>id:{list.todo}</small>
+      {(provider, snapshot) => {
+        return (
+          <li
+            ref={provider.innerRef}
+            {...provider.dragHandleProps}
+            {...provider.draggableProps}
+            className={`flex w-full mb-4 ${
+              snapshot.isDragging ? "bg-red-400 shadow-md" : "bg-red-200"
+            } rounded-xl shadow-md  cursor-pointer select-none transition-all duration-200 ease-in`}
+          >
+            <img
+              className="m-5 mr-8 w-10 h-10 rounded-full shadow-md"
+              src="https://images.unsplash.com/photo-1641499414064-306123010a9b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+              alt="img"
+            />
+            <div className="p-3 w-full flex justify-between flex-col">
+              <h2>{list.todo}</h2>
+              <div className="w-full flex items-center mt-3 pr-3 justify-between">
+                <button className=" text-sm cursor-pointer rounded-md bg-blue-300 p-1">
+                  Fin
+                </button>
+                <small>id:{list.todo}</small>
+              </div>
             </div>
-          </div>
-        </li>
-      )}
+          </li>
+        );
+      }}
     </Draggable>
   );
 };
