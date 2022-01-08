@@ -1,12 +1,7 @@
 import { useCallback } from "react";
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
-import { todoState } from "./atoms";
+import { todoState, TypeTodo, TypeTodoState } from "./atoms";
 import Board from "./components/Board";
 import _ from "lodash";
 import Form from "./components/Form";
@@ -16,11 +11,29 @@ function App() {
   const [list, setList] = useRecoilState(todoState);
 
   const onDragEnd = useCallback(
-    ({ destination, source }: DropResult) => {
+    (args: DropResult) => {
+      const { destination, source } = args;
+
       if (destination?.index == null) return;
 
       const { index: DI, droppableId: DDI } = destination;
       const { index: SI, droppableId: SSI } = source;
+
+      if (args.draggableId.includes("-1")) {
+        const start = SSI.split("-")[0];
+        const end = DDI.split("-")[0];
+        setList((pre) => {
+          const newObj: TypeTodoState = {};
+          for (let key in pre) {
+            if (!pre[end] || !pre[start]) continue;
+            if (key === start) newObj[end] = pre[end];
+            if (key === end) newObj[start] = pre[start];
+            newObj[key] = pre[key];
+          }
+          return newObj;
+        });
+        return;
+      }
 
       if (destination.droppableId === "garbage") {
         setList((pre) => {
@@ -64,8 +77,21 @@ function App() {
           </Droppable>
         </div>
 
-        {Object.keys(list).map((key) => (
-          <Board key={key} list={list[key]} title={key} />
+        {Object.keys(list).map((key, index) => (
+          <Droppable droppableId={`${key}-1`}>
+            {(outProvider, outSnapshot) => {
+              return (
+                <div
+                  key={index - 6000}
+                  className=" flex"
+                  ref={outProvider.innerRef}
+                  {...outProvider.droppableProps}
+                >
+                  <Board index={index} list={list[key]} title={key} />
+                </div>
+              );
+            }}
+          </Droppable>
         ))}
       </DragDropContext>
     </div>
