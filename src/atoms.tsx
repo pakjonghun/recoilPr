@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
 
 export const makeTodo = (todo: string) => ({
   id: Math.random().toString(20).substring(0, 12),
@@ -14,17 +15,14 @@ export type TypeTodoState = {
   [key: string]: TypeTodo[];
 };
 
+const { persistAtom } = recoilPersist();
+
 export const todoState = atom<TypeTodoState>({
   key: "todos",
   default: {
-    todo: [
-      makeTodo("b"),
-      makeTodo("c"),
-      makeTodo("dd"),
-      makeTodo("e"),
-      makeTodo("f"),
-    ],
-    doing: [makeTodo("g"), makeTodo("h")],
-    done: [makeTodo("d")],
+    todo: [makeTodo("sample")],
+    doing: [makeTodo("sample"), makeTodo("sample")],
+    done: [makeTodo("sample")],
   },
+  effects_UNSTABLE: [persistAtom],
 });

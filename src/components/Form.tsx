@@ -1,5 +1,4 @@
 import _ from "lodash";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import { makeTodo, todoState } from "../atoms";
@@ -10,7 +9,7 @@ const Form = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<TypeTodo>({ mode: "onChange" });
   const setValue = useSetRecoilState(todoState);
 

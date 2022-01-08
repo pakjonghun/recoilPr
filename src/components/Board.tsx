@@ -25,7 +25,7 @@ const Board: FC<BoardProps> = ({ list, title }) => {
               }  overflow-y-scroll rounded-sm transition-all delay-200 ease-in`}
             >
               {list.map((item, index) => (
-                <Card key={item.id} index={index} list={item} />
+                <Card key={item.id} index={index} list={item} status={title} />
               ))}
               {provider.placeholder}
             </ul>
