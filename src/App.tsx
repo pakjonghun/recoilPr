@@ -28,8 +28,11 @@ function App() {
 
   return (
     <div className="relative flex p-20 bg-blue-500 w-screen h-screen">
-      <Form />
-      <DashboardForm />
+      <div className="flex absolute">
+        <Form />
+        <DashboardForm />
+      </div>
+
       <DragDropContext onDragEnd={onDragEnd}>
         {Object.keys(list).map((key) => (
           <Board key={key} list={list[key]} title={key} />

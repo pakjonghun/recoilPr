@@ -5,7 +5,7 @@ import { makeTodo, todoState } from "../atoms";
 
 type TypeTodo = { todo: string };
 
-const Form = () => {
+const DashboardForm = () => {
   const {
     handleSubmit,
     register,
@@ -23,7 +23,7 @@ const Form = () => {
 
   return (
     <form
-      className="absolute top-2 left-2 px-5 py-3 bg-blue-200 rounded-md"
+      className=" top-2 left-2 px-5 py-3 bg-blue-200 rounded-md"
       onSubmit={onSubmit}
     >
       {errors?.todo?.message && (
@@ -35,7 +35,7 @@ const Form = () => {
           required: { value: true, message: "insert plz" },
         })}
         type="text"
-        placeholder="Todo"
+        placeholder="Dashboard"
       />
 
       <input
@@ -47,4 +47,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default DashboardForm;
