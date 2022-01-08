@@ -11,13 +11,13 @@ type CardProps = {
 
 const Card: FC<CardProps> = ({ list, index }) => {
   return (
-    <Draggable index={index} draggableId={list.todo}>
+    <Draggable index={index} draggableId={list.id}>
       {(provider) => (
         <li
           ref={provider.innerRef}
           {...provider.dragHandleProps}
           {...provider.draggableProps}
-          className="flex cursor-pointer bg-red-200 w-full h-22 rounded-xl shadow-md mb-4"
+          className="flex cursor-pointer bg-red-200 w-full rounded-xl shadow-md mb-4"
         >
           <img
             className="m-5 mr-8 w-10 h-10 rounded-full shadow-md"

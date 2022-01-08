@@ -17,10 +17,10 @@ const Board: FC<BoardProps> = ({ list, title }) => {
           <ul
             {...provider.droppableProps}
             ref={provider.innerRef}
-            className=" bg-stone-300 w-full max-w-xs flex flex-col items-center"
+            className=" overflow-y-scroll bg-stone-300 h-full w-full max-w-xs flex flex-col items-center"
           >
             {list.map((item, index) => (
-              <Card key={item.todo} index={index} list={item} />
+              <Card key={item.id} index={index} list={item} />
             ))}
             {provider.placeholder}
           </ul>
