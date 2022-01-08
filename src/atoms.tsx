@@ -11,15 +11,24 @@ export type TypeTodo = {
 };
 
 export type TypeTodoState = {
-  todo: TypeTodo[];
-  doing: TypeTodo[];
-  done: TypeTodo[];
+  [key: string]: TypeTodo[];
 };
 
 export const todoState = atom<TypeTodoState>({
   key: "todos",
   default: {
-    todo: [makeTodo("a"), makeTodo("b")],
+    todo: [
+      makeTodo("a"),
+      makeTodo("a"),
+      makeTodo("a"),
+      makeTodo("a"),
+      makeTodo("a"),
+      makeTodo("a"),
+      makeTodo("a"),
+      makeTodo("a"),
+      makeTodo("b"),
+      makeTodo("a"),
+    ],
     doing: [makeTodo("g"), makeTodo("h")],
     done: [makeTodo("d")],
   },

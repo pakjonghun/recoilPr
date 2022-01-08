@@ -10,21 +10,23 @@ type BoardProps = {
 
 const Board: FC<BoardProps> = ({ list, title }) => {
   return (
-    <Droppable droppableId={title}>
-      {(provider) => (
-        <ul
-          {...provider.droppableProps}
-          ref={provider.innerRef}
-          className=" h-100 m-10 rounded-md p-3 w-full max-w-xs flex flex-col items-center bg-stone-200"
-        >
-          <h1 className=" mb-8 text-4xl font-bold">{title.toUpperCase()}</h1>
-          {list.map((item, index) => (
-            <Card key={index} index={index} list={item} />
-          ))}
-          {provider.placeholder}
-        </ul>
-      )}
-    </Droppable>
+    <div className=" flex flex-col items-center w-full m-10 p-4 bg-stone-200 rounded-md  ">
+      <h1 className=" mb-8 text-4xl font-bold">{title.toUpperCase()}</h1>
+      <Droppable droppableId={title}>
+        {(provider) => (
+          <ul
+            {...provider.droppableProps}
+            ref={provider.innerRef}
+            className=" bg-stone-300 w-full max-w-xs flex flex-col items-center"
+          >
+            {list.map((item, index) => (
+              <Card key={item.todo} index={index} list={item} />
+            ))}
+            {provider.placeholder}
+          </ul>
+        )}
+      </Droppable>
+    </div>
   );
 };
 

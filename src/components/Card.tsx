@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { TypeTodo } from "../atoms";
 
@@ -39,4 +39,4 @@ const Card: FC<CardProps> = ({ list, index }) => {
   );
 };
 
-export default Card;
+export default React.memo(Card);

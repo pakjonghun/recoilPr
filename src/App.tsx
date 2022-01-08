@@ -3,27 +3,32 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import { todoState } from "./atoms";
 import Board from "./components/Board";
-import { TypeStatus } from "./components/Card";
+import _ from "lodash";
 
 function App() {
   const [list, setList] = useRecoilState(todoState);
 
-  const onDragEnd = useCallback(({ destination, source }: DropResult) => {
-    if (destination?.index == null) return;
+  const onDragEnd = useCallback(
+    ({ destination, source }: DropResult) => {
+      if (destination?.index == null) return;
+      const { index: DI, droppableId: DDI } = destination;
+      const { index: SI, droppableId: SSI } = source;
 
-    // setList((pre) => {
-    //   const newArray = pre[destination.droppableId];
-    //   newArray.splice(source.index, 1);
-    //   newArray.splice(destination.index, 0, pre[destination.droppableId][source.index]);
-    //   return { ...pre, [destination.droppableId]: newArray };
-    // });
-  }, []);
+      setList((pre) => {
+        const newObj = _.cloneDeep(pre);
+        newObj[SSI].splice(SI, 1);
+        newObj[DDI].splice(DI, 0, pre[SSI][SI]);
+        return newObj;
+      });
+    },
+    [setList]
+  );
 
   return (
     <div className="flex  p-10 bg-blue-500 w-screen h-screen">
       <DragDropContext onDragEnd={onDragEnd}>
-        {Object.keys(list).map((key, index) => (
-          <Board key={index} list={list[key as TypeStatus]} title={key} />
+        {Object.keys(list).map((key) => (
+          <Board key={key} list={list[key]} title={key} />
         ))}
       </DragDropContext>
     </div>
