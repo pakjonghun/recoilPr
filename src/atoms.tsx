@@ -10,11 +10,13 @@ export type TypeTodo = {
   id: string;
 };
 
-export const todoState = atom<{
+export type TypeTodoState = {
   todo: TypeTodo[];
   doing: TypeTodo[];
   done: TypeTodo[];
-}>({
+};
+
+export const todoState = atom<TypeTodoState>({
   key: "todos",
   default: {
     todo: [makeTodo("a"), makeTodo("b")],
