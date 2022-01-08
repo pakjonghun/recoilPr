@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import { makeTodo, todoState } from "../atoms";
 
-type TypeTodo = { todo: string };
+type TypeTodo = { name: string };
 
 const DashboardForm = () => {
   const {
@@ -15,9 +15,9 @@ const DashboardForm = () => {
 
   const onSubmit = handleSubmit((data) => {
     setValue((pre) => {
-      const todo = _.cloneDeep(pre["todo"]);
-      todo.unshift(makeTodo(data.todo));
-      return { ...pre, todo };
+      const cur = _.cloneDeep(pre);
+      cur[data.name] = [];
+      return cur;
     });
   });
 
@@ -26,12 +26,12 @@ const DashboardForm = () => {
       className=" top-2 left-2 px-5 py-3 bg-blue-200 rounded-md"
       onSubmit={onSubmit}
     >
-      {errors?.todo?.message && (
-        <p className="text-red-600">{errors.todo.message}</p>
+      {errors?.name?.message && (
+        <p className="text-red-600">{errors.name.message}</p>
       )}
       <input
         className="px-3 py-2 mr-3"
-        {...register("todo", {
+        {...register("name", {
           required: { value: true, message: "insert plz" },
         })}
         type="text"

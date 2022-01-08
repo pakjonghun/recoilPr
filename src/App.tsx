@@ -27,8 +27,8 @@ function App() {
   );
 
   return (
-    <div className="relative flex p-20 bg-blue-500 w-screen h-screen">
-      <div className="flex absolute">
+    <div className="relative flex p-20 bg-blue-500 h-screen overflow-x-scroll">
+      <div className="absolute top-2 left-2 flex  ">
         <Form />
         <DashboardForm />
       </div>

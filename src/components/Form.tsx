@@ -23,7 +23,7 @@ const Form = () => {
 
   return (
     <form
-      className="absolute top-2 left-2 px-5 py-3 bg-blue-200 rounded-md"
+      className="top-2 left-2 mr-3 px-5 py-3 bg-blue-200 rounded-md"
       onSubmit={onSubmit}
     >
       {errors?.todo?.message && (

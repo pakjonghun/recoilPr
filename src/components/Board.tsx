@@ -10,7 +10,7 @@ type BoardProps = {
 
 const Board: FC<BoardProps> = ({ list, title }) => {
   return (
-    <div className=" flex flex-col items-center w-full m-10 p-4 bg-stone-200 rounded-md  ">
+    <div className=" flex flex-col items-center min-w-96 m-10 p-4 bg-stone-200 rounded-md  ">
       <h1 className=" mb-8 text-4xl font-bold">{title.toUpperCase()}</h1>
       <Droppable droppableId={title}>
         {(provider, snapshot) => {
