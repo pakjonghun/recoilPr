@@ -18,10 +18,20 @@ function App() {
 
       const { index: DI, droppableId: DDI } = destination;
       const { index: SI, droppableId: SSI } = source;
+      const start = SSI.split("-")[0];
+      const end = DDI.split("-")[0];
 
-      if (args.draggableId.includes("-1")) {
-        const start = SSI.split("-")[0];
-        const end = DDI.split("-")[0];
+      if (SSI.includes("-1")) {
+        if (DDI === "garbage") {
+          setList((pre) => {
+            const newObj = _.cloneDeep(pre);
+            delete newObj[start];
+            return newObj;
+          });
+
+          return;
+        }
+
         setList((pre) => {
           const newObj: TypeTodoState = {};
           for (let key in pre) {
@@ -78,11 +88,10 @@ function App() {
         </div>
 
         {Object.keys(list).map((key, index) => (
-          <Droppable droppableId={`${key}-1`}>
+          <Droppable key={String(index - 6000).trim()} droppableId={`${key}-1`}>
             {(outProvider, outSnapshot) => {
               return (
                 <div
-                  key={index - 6000}
                   className=" flex"
                   ref={outProvider.innerRef}
                   {...outProvider.droppableProps}

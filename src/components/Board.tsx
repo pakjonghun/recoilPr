@@ -11,7 +11,7 @@ type BoardProps = {
 
 const Board: FC<BoardProps> = ({ index, list, title }) => {
   return (
-    <Draggable index={index - 6000} draggableId={index.toString() + "-1"}>
+    <Draggable index={index - 6000} draggableId={String(index - 6000).trim()}>
       {(outPro, outSnap) => {
         return (
           <div
@@ -19,7 +19,10 @@ const Board: FC<BoardProps> = ({ index, list, title }) => {
             {...outPro.dragHandleProps}
             {...outPro.draggableProps}
           >
-            <Droppable droppableId={title}>
+            <Droppable
+              type={outSnap.isDragging ? String(index - 6000).trim() : ""}
+              droppableId={title}
+            >
               {(provider, snapshot) => {
                 return (
                   <div className="h-full flex flex-col items-center min-w-96 m-10 p-4 bg-stone-200 rounded-md  ">
@@ -33,16 +36,18 @@ const Board: FC<BoardProps> = ({ index, list, title }) => {
                         snapshot.isDraggingOver
                           ? "bg-stone-300 shadow-md"
                           : "bg-stone-200"
-                      }  overflow-y-scroll rounded-sm transition-all delay-200 ease-in`}
+                      } overflow-y-scroll rounded-sm transition-all delay-200 ease-in`}
                     >
-                      {list.map((item, index) => (
-                        <Card
-                          key={item.id}
-                          index={index}
-                          list={item}
-                          status={title}
-                        />
-                      ))}
+                      {list.map((item, index) => {
+                        return (
+                          <Card
+                            key={item.id.trim()}
+                            index={index}
+                            list={item}
+                            status={title}
+                          />
+                        );
+                      })}
                       {provider.placeholder}
                     </ul>
                   </div>

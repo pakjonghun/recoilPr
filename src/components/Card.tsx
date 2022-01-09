@@ -14,16 +14,14 @@ type CardProps = {
 
 const Card: FC<CardProps> = ({ list, index, status }) => {
   const setTodo = useSetRecoilState(todoState);
-
   const onDelete = (id: string) => {
     setTodo((pre) => ({
       ...pre,
       [status]: pre[status].filter((i) => i.id !== id),
     }));
   };
-
   return (
-    <Draggable index={index} draggableId={list.id}>
+    <Draggable index={index} draggableId={list.id.trim()}>
       {(provider, snapshot) => {
         return (
           <li
